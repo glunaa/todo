@@ -3,7 +3,6 @@ import { InputGroup, Form, Button } from 'react-bootstrap';
 import TodoItem from './TodoItem'; // Import the TodoItem component
 const TodoList = () => {
 
-    
     const [todo, addTodo] = useState<string>('');
     const [list,addList] = useState<string[]>([]);
 
@@ -14,6 +13,7 @@ const TodoList = () => {
           addTodo('');
         }
     }
+    
   return (
     <div>
       <Form onSubmit={handleSubmit}>

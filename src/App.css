@@ -14,3 +14,9 @@
   max-width: 60%;
   padding-right: .5rem;
 }
+.listItems{
+  list-style-type: none;
+}
+.checkbox{
+  display: flex;
+}

@@ -12,6 +12,7 @@ const TodoList = () => {
           addList([...list,todo]);
           addTodo('');
         }
+        
     }
     
   return (

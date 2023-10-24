@@ -1,24 +1,39 @@
 import React from 'react';
 import { useState } from 'react';
+import { Button } from 'react-bootstrap';
 interface TodoItemProps {
   text: string;
+  isChecked: boolean; // Add the isChecked prop to the interface
+  onDelete: () => void;
 }
 const TodoItem: React.FC<TodoItemProps> = ({ text }) => {
-  const [isDeleted, setIsDeleted] = useState(false);
+  const [isChecked, setIsChecked] = useState(false);
 
-  const handleDelete = () => {
-    setIsDeleted(true);
+  const handleCheck = () => {
+    setIsChecked(!isChecked);
+  };
+  const deleteTodo = (button: HTMLButtonElement) => {
+    const li = button.parentElement as HTMLLIElement;
+    li.remove(); // This will remove the todo item from the DOM
+  }
+  const handleDelete = (button) => {
+    deleteTodo(button);
   };
 
   return (
-    <div className={`todo-item ${isDeleted ? 'deleted' : ''}`}>
-      <input className="checkbox" type="checkbox"></input>
+    <div className={`todo-item ${isChecked ? 'checked' : ''} `}>
+      <input
+        className="checkbox"
+        type="checkbox"
+        checked={isChecked}
+        onChange={handleCheck}
+      ></input>
       <span>
         <li>{text}</li>
       </span>
-      <button className="deleteButton" onClick={handleDelete}>
+      <Button variant="danger" className="deleteButton" onClick={handleDelete}>
         delete
-      </button>
+      </Button>
     </div>
   );
 };

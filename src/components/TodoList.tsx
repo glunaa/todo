@@ -1,39 +1,46 @@
 import React, { useState } from 'react';
 import { InputGroup, Form, Button } from 'react-bootstrap';
-import TodoItem from './TodoItem'; // Import the TodoItem component
+import TodoItem from './TodoItem';
+
 const TodoList = () => {
+  const [todo, setTodo] = useState('');
+  const [list, setList] = useState<{id: number; text: string; isChecked: boolean}[]>([]);
 
-    const [todo, addTodo] = useState<string>('');
-    const [list,addList] = useState<string[]>([]);
-
-    function handleSubmit(e:React.FormEvent<HTMLFormElement>){// 
-        e.preventDefault();
-        if(todo.trim() !== ''){
-          addList([...list,todo]);
-          addTodo('');
-        }
-        
+  const handleAddTodo = (e) => {
+    e.preventDefault();
+    if (todo.trim() !== '') {
+      setList([...list, { id: Date.now(), text: todo, isChecked: false }]);
+      setTodo('');
     }
-    
+  };
+
+  const handleDeleteTodo = (id) => {
+    setList(list.filter((item) => item.id !== id));
+  };
+
   return (
     <div>
-      <Form onSubmit={handleSubmit}>
+      <Form>
         <InputGroup className="mb-3 inputText">
           <Form.Control
-
             placeholder="New task..."
-            aria-label="New task..."
-            aria-describedby="basic-addon2"
-            onChange={(e) => addTodo(e.target.value)} 
-
+            value={todo}
+            onChange={(e) => setTodo(e.target.value)}
           />
         </InputGroup>
-        <Button type="submit"variant="primary">Add</Button>
+        <Button type="button" variant="primary" onClick={(e) => handleAddTodo(e)}>
+          Add
+        </Button>
       </Form>
-      <hr/>
-      <ul className='listItems'>
-      {list.map((task, index) => (
-          <TodoItem key={index} text={task} />
+      <hr />
+      <ul className="listItems">
+        {list.map((task) => (
+          <TodoItem
+            key={task.id}
+            text={task.text}
+            isChecked={task.isChecked}
+            onDelete={() => handleDeleteTodo(task.id)}
+          />
         ))}
       </ul>
     </div>
@@ -41,3 +48,4 @@ const TodoList = () => {
 };
 
 export default TodoList;
+

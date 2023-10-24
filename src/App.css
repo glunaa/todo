@@ -26,14 +26,12 @@
 .deleteButton {
   float:right;
   padding:8px 12px;
-  border: 1px solid black;
   border-radius: 6px;
-  background: transparent;
   cursor: pointer;
   display: inline; /* Make sure the button is inline with the text */
 }
 
-.deleted .inputText {
+.checkbox .inputText {
   text-decoration: line-through;
 }
 .todo-item {
@@ -43,6 +41,6 @@
   padding: 8px;
 }
 
-.todo-item.deleted span {
+.todo-item.checkbox span {
   text-decoration: line-through;
 }

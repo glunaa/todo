@@ -1,21 +1,18 @@
 import React, { useState } from 'react';
 import { InputGroup, Form, Button } from 'react-bootstrap';
 import TodoItem from './TodoItem';
+//import { takeCoverage } from 'v8';
 
 const TodoList = () => {
   const [todo, setTodo] = useState('');
-  const [list, setList] = useState<{id: number; text: string; isChecked: boolean}[]>([]);
+  const [list, setList] = useState<string[]>([]);
 
-  const handleAddTodo = (e) => {
+  const handleAddTodo = (e: any) => {
     e.preventDefault();
     if (todo.trim() !== '') {
-      setList([...list, { id: Date.now(), text: todo, isChecked: false }]);
-      setTodo('');
+      setList([...list, todo]);
+      setTodo(''); // Clear the input field
     }
-  };
-
-  const handleDeleteTodo = (id) => {
-    setList(list.filter((item) => item.id !== id));
   };
 
   return (
@@ -28,19 +25,18 @@ const TodoList = () => {
             onChange={(e) => setTodo(e.target.value)}
           />
         </InputGroup>
-        <Button type="button" variant="primary" onClick={(e) => handleAddTodo(e)}>
+        <Button
+          type="submit"
+          variant="primary"
+          onClick={(e) => handleAddTodo(e)}
+        >
           Add
         </Button>
       </Form>
       <hr />
       <ul className="listItems">
-        {list.map((task) => (
-          <TodoItem
-            key={task.id}
-            text={task.text}
-            isChecked={task.isChecked}
-            onDelete={() => handleDeleteTodo(task.id)}
-          />
+        {list.map((task,index) => (
+          <TodoItem key={index}text={task} />
         ))}
       </ul>
     </div>
@@ -48,4 +44,3 @@ const TodoList = () => {
 };
 
 export default TodoList;
-

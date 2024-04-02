@@ -15,6 +15,11 @@ const TodoList = () => {
     }
   };
 
+  const handleDeleteTask = (taskId: number) => {
+
+    const updatedTasks = list.filter((_,index) => index !== taskId);
+    setList(updatedTasks);
+  } 
   return (
     <div>
       <Form>
@@ -36,7 +41,7 @@ const TodoList = () => {
       <hr />
       <ul className="listItems">
         {list.map((task,index) => (
-          <TodoItem key={index}text={task} />
+          <TodoItem key={index}text={task} id={index} onDelete={handleDeleteTask} />
         ))}
       </ul>
     </div>

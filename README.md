@@ -1,6 +1,6 @@
 # Getting Started with Create React App
 
-<a>https://glunaa.github.io/todo/</a>
+<a>https://justanothertodoapplication.netlify.app/</a>
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 

@@ -1,33 +1,48 @@
-import React, { useState } from 'react';
-import { Button } from 'react-bootstrap';
-interface TodoItemProps {
-  text: string;
-  id: number; // unique number for eachtask 
+import React from 'react';
+import { Todo } from '../App';
 
-  onDelete: (id : number) => void; // callback function for deletion
+interface Props {
+  todo: Todo;
+  onToggle: (id: string) => void;
+  onDelete: (id: string) => void;
 }
 
-const TodoItem: React.FC<TodoItemProps> = ({ text,id,onDelete }) => {
-
-  const [isChecked, setIsChecked] = useState(false);
-  const handleCheckboxChange = () => {
-    setIsChecked(!isChecked);
-  }
-
-  const handleDelete = () => {
-    onDelete(id);
-  }
-
+const TodoItem: React.FC<Props> = ({ todo, onToggle, onDelete }) => {
   return (
-    <div className="todo-item">
-      <input className="checkbox" type="checkbox" checked={isChecked} onChange={handleCheckboxChange}></input>
-      <span>
-        <li style={{textDecoration: isChecked ? 'line-through' : 'none'}}>{text}</li>
-      </span>
-      <Button variant="danger" type="button" className="deleteButton" onClick={handleDelete}>
-        delete
-      </Button>
-    </div>
+    <li className={`todo-item${todo.completed ? ' completed' : ''}`}>
+      <button
+        className={`todo-check${todo.completed ? ' checked' : ''}`}
+        onClick={() => onToggle(todo.id)}
+        aria-label={todo.completed ? 'Mark incomplete' : 'Mark complete'}
+      >
+        {todo.completed && (
+          <svg width="11" height="11" viewBox="0 0 11 11" fill="none" aria-hidden="true">
+            <path
+              d="M1.5 5.5l3 3 5-5"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+          </svg>
+        )}
+      </button>
+      <span className="todo-text">{todo.text}</span>
+      <button
+        className="todo-delete"
+        onClick={() => onDelete(todo.id)}
+        aria-label="Delete task"
+      >
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+          <path
+            d="M3 3l8 8M11 3l-8 8"
+            stroke="currentColor"
+            strokeWidth="1.75"
+            strokeLinecap="round"
+          />
+        </svg>
+      </button>
+    </li>
   );
 };
 
